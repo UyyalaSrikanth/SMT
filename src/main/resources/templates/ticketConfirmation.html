@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ticket Confirmation</title>
+</head>
+<body>
+    <h1>Booking Confirmation</h1>
+    <div>
+        <p th:text="${message}"></p>
+        <p>Destination: <span th:text="${destination}"></span></p>
+        <p>Number of Tickets: <span th:text="${numTickets}"></span></p>
+        <p>Ticket Type: <span th:text="${ticketType}"></span></p>
+        <p>Email for Receipt: <span th:text="${email}"></span></p>
+        <p>Total Price: <span th:text="${totalPrice}"></span></p>
+    </div>
+    <a href="/tickets">Book Another Ticket</a>
+</body>
+</html>
