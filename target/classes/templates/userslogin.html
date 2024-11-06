@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
+        .LoginMessage{
+           color: #45a049;
+        }
+        .wrongpassword-message,errorusername-message{
+            color: red;
+        }
+        .form-container {
+            flex: 1;
+            max: width 500px;;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            display: none; /* Hidden by default */
+            width: 250px;
+            height: 400px;
+            
+        }
+        .form-container.active {
+            display: block; /* Show when active */
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        h1 {
+            text-align: start;
+        }
+        button {
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .siginup{
+            margin-top: 10px;
+            display:block;
+            width: 20%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+         
+        }
+        .text{
+            display: flex;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        a {
+            display: block;
+            margin-top: 10px;
+            text-align: center;
+            color: #007BFF;
+            cursor: pointer;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            padding: 80px;
+            overflow-x: auto;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            
+        }
+        tr:hover {
+            background-color: #f1f1f1; /* Highlight on hover */
+        }
+
+        @media (max-width: 768px) {
+     table {
+        display: block; /* Make table block on small screens */
+        overflow-x: auto; /* Allow horizontal scroll */
+        white-space: nowrap; /* Prevent wrapping */
+        border-collapse: collapse;
+        width: 100%;
+            border-collapse: collapse;
+            margin: 50px auto;
+            padding: 80px;
+            overflow-x: auto;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+         border-bottom: 1px solid #ddd;
+        width: 100%; /* Full width */
+    }
+}
+    </style>
+    <script>
+        function showForm(formId) {
+            // Hide both forms
+            document.getElementById('registerForm').classList.remove('active');
+            document.getElementById('loginForm').classList.remove('active');
+            // Show the selected form
+            document.getElementById(formId).classList.add('active');
+        }
+
+        window.onload = function() {
+            // Show login form by default
+            showForm('loginForm');  // Change this line to display the login form first
+        }
+    </script>
+</head>
+<header>
+    <nav class="navs">
+        <ul><a href="/api/TicketDetails/Home">Home</a></ul>
+    </nav>
+</header>
+<body>
+   
+    <div id="registerForm" class="form-container">
+        <form action="/api/Admin/save" method="post">
+            <h1>Create Account</h1>
+            <label for="username">Email</label>
+            <input type="text" name="username" id="username" required>
+            
+            <label for="create-number">Number</label>
+            <input type="text" name="number" id="create-number" pattern="\d{10}" required>
+            
+            <label for="create-password">Password</label>
+            <input type="password" name="password" maxlength="8" id="create-password" required>
+            
+            <button type="submit" class="siginup">Submit</button>
+            <a onclick="showForm('loginForm')" class="text">Already have an Account?</a>
+        </form>
+        <div>
+            <p class="message success-message" th:text="${message}" th:if="${message}"></p>
+        </div>
+        <div>
+            <p class="error-message" th:text="${error}" th:if="${error}"></p>
+        </div>
+    </div>
+      
+    <!-- Login Form -->
+    <div id="loginForm" class="form-container">
+        <form action="/api/Admin/userlogin" method="post"> <!-- Changed to POST for login -->
+            <h1>Login</h1>
+            <label for="login-username">Email</label>
+            <input type="text" name="username" id="login-username" required>
+            
+            <label for="login-password">Password</label>
+            <input type="password" name="password" id="login-password" required>
+            
+            <button type="submit" class="siginup">Login</button>
+            <a onclick="showForm('registerForm')" class="text">Don't have an account? Register here</a>
+        </form>
+        <div>
+            <p class="LoginMessage" th:text="${LoginMessage}" th:if="${LoginMessage}"></p>
+        </div>
+        <div>
+            <p class="wrongpassword-message" th:text="${wrongpassword}" th:if="${wrongpassword}"></p>
+        </div> 
+        
+        <div>
+            <p class="errorusername-message" th:text="${errorusername}" th:if="${errorusername}"></p>
+        </div>
+
+      
+    </div>
+</body>
+</html>

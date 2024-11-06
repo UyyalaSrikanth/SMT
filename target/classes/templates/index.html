@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Book tickets easily using our Smart Ticket System.">
+    <meta name="keywords" content="Ticket Booking, Smart Ticket System, Transportation">
+    <title>Smart Ticket System</title>
+
+    <style>
+        body {
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0; 
+            background-image:image("smt-img.webp");
+        }
+        header {
+            background-color: #007bff;
+            padding: 30px; /* Header padding */
+            color: white; /* Text color in header */
+            display: flex;
+            justify-content: start; /* Center nav items */
+        }
+        .welcome h1 {
+            text-align: center; /* Center the text in the welcome section */
+            margin: 0; /* Remove default margin */
+            padding: 20px 0; /* Add padding for spacing */
+        }
+        .navs {
+            list-style-type: none; /* Remove bullet points */
+            padding: 0; /* Remove padding */
+            margin: 0; /* Remove margin */
+            display: flex; /* Horizontal layout */
+        }
+        .navs li {
+            margin: 0 15px; /* Space between items */
+        }
+        .navs a {
+            color: white; /* Link color */
+            text-decoration: none; /* Remove underline */
+            padding: 10px 15px; /* Padding for links */
+            border-radius: 5px; /* Rounded corners */
+            transition: background-color 0.3s; /* Smooth background transition */
+        }
+        .navs a:hover {
+            background-color: #0056b3; /* Change color on hover */
+        }
+        .all {
+            display: flex; /* Flex layout */
+            justify-content: space-between; /* Space between the boxes */
+            margin: 20px; /* Margin for the entire section */
+            gap: 10px; /* Space between the boxes */
+        }
+        .container,
+        .find {
+            flex: 1; /* Allow both divs to grow equally */
+            max-width: 500px; /* Set a max width for each box */
+            padding: 20px; /* Inner padding */
+            background-color: #fff; /* White background */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+            border-radius: 10px; /* Rounded corners */
+        }
+        label {
+            display: block; /* Block-level for labels */
+            margin-bottom: 5px; /* Space below labels */
+            font-weight: bold; /* Bold text */
+        }
+        .id{
+            margin-bottom: 15px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+        select, input[type="email"], input[type="text"], button {
+            width: 100%; /* Full width */
+            padding: 10px; /* Inner padding */
+            margin-bottom: 20px; /* Space below elements */
+            border: 1px solid #ccc; /* Border style */
+            border-radius: 5px; /* Rounded corners */
+        }
+        button {
+            background-color: #007bff; /* Button color */
+            color: white; /* Button text color */
+            border: none; /* Remove border */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+        button:hover {
+            background-color: #0056b3; /* Darker button on hover */
+        }
+        .message {
+            padding: 10px; /* Padding for message */
+            border-radius: 5px; /* Rounded corners */
+            margin-top: 20px; /* Space above */
+        }
+        .success-message {
+            background-color: #dff0d8; /* Success message background */
+            color: #3c763d; /* Success message text color */
+        }
+        .error-message {
+            background-color: #f2dede; /* Error message background */
+            color: #a94442; /* Error message text color */
+        }
+        .form-section {
+            margin-bottom: 30px; /* Space between form sections */
+        }
+        html{
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+   
+    <nav>
+        <ul class="navs">
+            <li><a href="/api/TicketDetails/Home">Home</a></li>
+            <li><a href="#Book">Book</a></li>
+            <li><a href="/api/TicketDetails/login" class="login-button">Admin Login</a></li>
+            <li><a href="/api/TicketDetails/userlogin" class="login-button">users Login</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="welcome">
+    <h1>Welcome to Smart Ticket System</h1>
+</div>
+<div class="all"> 
+    
+    <div class="container">
+        <section id="Book">
+        <h1>Book Your Ticket</h1>
+        <form action="/api/TicketDetails/Price" method="post" class="form-section">
+            <label for="Destination">Destination:</label>
+            <select name="Destination" id="Destination" required>
+                <option value="MNTY-PDPL">MNTY-PDPL</option>
+                <option value="KLV-PDPL">KLV-PDPL</option>
+                <option value="GNDRM-PDPL">GNDRM-PDPL</option>
+                <option value="RGPR-PDPL">RGPR-PDPL</option>
+            </select>
+
+            <label for="TicketType">Ticket Type:</label>
+            <select name="TicketType" id="TicketType" required>
+                <option value="Normal">Normal</option>
+                <option value="Handicapped">Handicapped</option>
+            </select>
+
+            <label for="Email">Email:</label>
+            <input type="email" id="Email" name="Email" required placeholder="example@mail.com">
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div>
+            <p class="message success-message" th:text="${message}" th:if="${message}"></p>
+            <p class="message error-message" th:text="${EmailMessege}" th:if="${EmailMessege}"></p>
+        </div>
+    </section>
+    </div>
+  
+    <div class="find">
+        <h2>Find Ticket by ID</h2>
+        <form th:action="@{/api/TicketDetails/find}" method="get">
+            <label for="ticketId">Enter Ticket ID:</label>
+            <input type="number" name="id" id="ticketId" required placeholder="Enter your ticket ID" class="id">
+            <button type="submit">Find Ticket</button>
+        </form>
+
+        <div>
+            <p class="message success-message" th:text="${message}" th:if="${message}"></p>
+            <p class="message error-message" th:text="${errorMessage}" th:if="${errorMessage}"></p> <!-- Display error message -->
+        </div>
+        
+        <div th:if="${ticketDetails}">
+            <h3>Ticket Details</h3>
+            <p th:text="'Destination: ' + ${ticketDetails.destination}"></p>
+            <p th:text="'Distance: ' + ${ticketDetails.distance}"></p>
+            <p th:text="'Ticket Type: ' + ${ticketDetails.ticketType}"></p>
+            <p th:text="'Price: ' + ${ticketDetails.price}"></p>
+            <p th:text="'Email: ' + ${ticketDetails.email}"></p>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
