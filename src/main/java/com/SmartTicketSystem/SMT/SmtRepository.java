@@ -8,5 +8,5 @@ import java.util.List;
 public interface SmtRepository extends JpaRepository<TicketDetails, Long> {
    
     List<TicketDetails> findByEmail(String email);  // This retrieves a list of TicketDetails by email
-    // Remove the findEmail method
+   
 }

@@ -9,24 +9,43 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
             margin: 0;
+            background: url("/images/login2.jpg") no-repeat center center/cover;
+            height: 100vh; 
+        }
+        .navs{
+            font-size: larger;
+            text-align: center; /* Center the text in the welcome section */
+            margin: auto; /* Remove default margin */
+            padding: 10px 0; /* Add padding for spacing */
+            color: #f4f4f9;
+            backdrop-filter: blur(10px);
         }
         .LoginMessage{
            color: #45a049;
+        }
+        .noticketfound{
+            color: red;
         }
         .wrongpassword-message,errorusername-message{
             color: red;
         }
         .form-container {
             flex: 1;
-            max: width 500px;;
+            max: width 500px;
             margin: 20px auto;
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            display: none; /* Hidden by default */
             width: 250px;
-            height: 400px;
+            height:350px;
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
+             backdrop-filter: blur(15px); /* Apply blur effect */
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+           border-radius: 15px;
+           display: none;
+             opacity: 0.9; /* Adjust transparency */
+            color: #160e0e;
             
         }
         .form-container.active {
@@ -132,6 +151,7 @@
     </script>
 </head>
 <header>
+
     <nav class="navs">
         <ul><a href="/api/TicketDetails/Home">Home</a></ul>
     </nav>
@@ -163,7 +183,7 @@
       
     <!-- Login Form -->
     <div id="loginForm" class="form-container">
-        <form action="/api/Admin/userlogin" method="post"> <!-- Changed to POST for login -->
+        <form action="/api/Admin/userslogin" method="post"> <!-- Changed to POST for login -->
             <h1>Login</h1>
             <label for="login-username">Email</label>
             <input type="text" name="username" id="login-username" required>
@@ -176,6 +196,7 @@
         </form>
         <div>
             <p class="LoginMessage" th:text="${LoginMessage}" th:if="${LoginMessage}"></p>
+            <p class="noticketsfound" th:text="${noticketsfound}" th:if="${noticketsfound}"></p>
         </div>
         <div>
             <p class="wrongpassword-message" th:text="${wrongpassword}" th:if="${wrongpassword}"></p>

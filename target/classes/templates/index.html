@@ -6,103 +6,217 @@
     <meta name="description" content="Book tickets easily using our Smart Ticket System.">
     <meta name="keywords" content="Ticket Booking, Smart Ticket System, Transportation">
     <title>Smart Ticket System</title>
-
     <style>
         body {
-            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: #f4f4f9;
-            margin: 0; 
-            background-image:image("smt-img.webp");
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            background-color: #1789a56a;
+            background: url("/images/bustand.jpg") no-repeat center center/cover;
+            height: 100vh; 
         }
+
         header {
-            background-color: #007bff;
-            padding: 30px; /* Header padding */
-            color: white; /* Text color in header */
+            background-color: #1789a56a;
+            padding: 30px;
+            color: white;
             display: flex;
-            justify-content: start; /* Center nav items */
+            justify-content: start;
         }
+
         .welcome h1 {
-            text-align: center; /* Center the text in the welcome section */
-            margin: 0; /* Remove default margin */
-            padding: 20px 0; /* Add padding for spacing */
+            color: hsl(0, 0%, 100%);
+            text-align: center;
+            margin: 0;
+            padding: 20px 0;
+            backdrop-filter: blur(10px); 
         }
+
         .navs {
-            list-style-type: none; /* Remove bullet points */
-            padding: 0; /* Remove padding */
-            margin: 0; /* Remove margin */
-            display: flex; /* Horizontal layout */
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
         }
-        .navs li {
-            margin: 0 15px; /* Space between items */
-        }
-        .navs a {
-            color: white; /* Link color */
-            text-decoration: none; /* Remove underline */
-            padding: 10px 15px; /* Padding for links */
-            border-radius: 5px; /* Rounded corners */
-            transition: background-color 0.3s; /* Smooth background transition */
-        }
-        .navs a:hover {
-            background-color: #0056b3; /* Change color on hover */
-        }
+
+        nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    position: relative;
+    padding: 5px 0;
+    transition: color 0.3s ease; 
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    background: #ffa500; 
+    transition: width 0.3s ease;
+    left: 0;
+    bottom: 0;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+nav ul li a:hover {
+    color: #ffa500; 
+}
+
+
         .all {
-            display: flex; /* Flex layout */
-            justify-content: space-between; /* Space between the boxes */
-            margin: 20px; /* Margin for the entire section */
-            gap: 10px; /* Space between the boxes */
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+            gap: 10px;
         }
-        .container,
-        .find {
-            flex: 1; /* Allow both divs to grow equally */
-            max-width: 500px; /* Set a max width for each box */
-            padding: 20px; /* Inner padding */
-            background-color: #fff; /* White background */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
-            border-radius: 10px; /* Rounded corners */
+
+        .background-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: inherit;
         }
+
+        .blurred-div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.5);
+            z-index: -1;
+        }
+
+        .container, .find {
+            flex: 1;
+            max-width: 500px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px); 
+        }
+
         label {
-            display: block; /* Block-level for labels */
-            margin-bottom: 5px; /* Space below labels */
-            font-weight: bold; /* Bold text */
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
-        .id{
+
+        .id {
             margin-bottom: 15px;
             border: 2px solid #ccc;
             border-radius: 5px;
         }
+
         select, input[type="email"], input[type="text"], button {
-            width: 100%; /* Full width */
-            padding: 10px; /* Inner padding */
-            margin-bottom: 20px; /* Space below elements */
-            border: 1px solid #ccc; /* Border style */
-            border-radius: 5px; /* Rounded corners */
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
+
         button {
-            background-color: #007bff; /* Button color */
-            color: white; /* Button text color */
-            border: none; /* Remove border */
-            cursor: pointer; /* Pointer cursor on hover */
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
+
         button:hover {
-            background-color: #0056b3; /* Darker button on hover */
+            background-color: #0056b3;
         }
+
         .message {
-            padding: 10px; /* Padding for message */
-            border-radius: 5px; /* Rounded corners */
-            margin-top: 20px; /* Space above */
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
         }
+
         .success-message {
-            background-color: #dff0d8; /* Success message background */
-            color: #3c763d; /* Success message text color */
+            background-color: #dff0d8;
+            color: #3c763d;
         }
+
         .error-message {
-            background-color: #f2dede; /* Error message background */
-            color: #a94442; /* Error message text color */
+            background-color: #f2dede;
+            color: #a94442;
         }
+
         .form-section {
-            margin-bottom: 30px; /* Space between form sections */
+            margin-bottom: 30px;
         }
-        html{
+
+        .footer p {
+            color: hsl(0, 84%, 56%);
+            text-align: center;
+            margin: 0;
+            padding: 20px 0;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+        @media (max-width: 768px) {
+            .navs {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    position: relative;
+    padding: 5px 0;
+    transition: color 0.3s ease; 
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    display: block;
+    background: #ffa500; 
+    transition: width 0.3s ease;
+    left: 0;
+    bottom: 0;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+nav ul li a:hover {
+    color: #ffa500; 
+}
+
+
+
+        }
+
+
+    
+
+        html {
             scroll-behavior: smooth;
         }
     </style>
@@ -110,7 +224,6 @@
 <body>
 
 <header>
-   
     <nav>
         <ul class="navs">
             <li><a href="/api/TicketDetails/Home">Home</a></li>
@@ -120,65 +233,74 @@
         </ul>
     </nav>
 </header>
+
 <div class="welcome">
     <h1>Welcome to Smart Ticket System</h1>
 </div>
-<div class="all"> 
+
+<div class="background-container">
+    <div class="blurred-div"></div> 
     
-    <div class="container">
-        <section id="Book">
-        <h1>Book Your Ticket</h1>
-        <form action="/api/TicketDetails/Price" method="post" class="form-section">
-            <label for="Destination">Destination:</label>
-            <select name="Destination" id="Destination" required>
-                <option value="MNTY-PDPL">MNTY-PDPL</option>
-                <option value="KLV-PDPL">KLV-PDPL</option>
-                <option value="GNDRM-PDPL">GNDRM-PDPL</option>
-                <option value="RGPR-PDPL">RGPR-PDPL</option>
-            </select>
+    <div class="all">
+        <div class="container">
+            <section id="Book">
+                <h1>Book Your Ticket</h1>
+                <form action="/api/TicketDetails/Price" method="post" class="form-section">
+                    <label for="Destination">Destination:</label>
+                    <select name="Destination" id="Destination" required>
+                        <option value="MNTY-PDPL">MNTY-PDPL</option>
+                        <option value="KLV-PDPL">KLV-PDPL</option>
+                        <option value="GNDRM-PDPL">GNDRM-PDPL</option>
+                        <option value="RGPR-PDPL">RGPR-PDPL</option>
+                    </select>
 
-            <label for="TicketType">Ticket Type:</label>
-            <select name="TicketType" id="TicketType" required>
-                <option value="Normal">Normal</option>
-                <option value="Handicapped">Handicapped</option>
-            </select>
+                    <label for="TicketType">Ticket Type:</label>
+                    <select name="TicketType" id="TicketType" required>
+                        <option value="Normal">Normal</option>
+                        <option value="Handicapped">Handicapped</option>
+                    </select>
 
-            <label for="Email">Email:</label>
-            <input type="email" id="Email" name="Email" required placeholder="example@mail.com">
+                    <label for="Email">Email:</label>
+                    <input type="email" id="Email" name="Email" required placeholder="example@mail.com">
 
-            <button type="submit">Submit</button>
-        </form>
+                    <button type="submit">Submit</button>
+                </form>
 
-        <div>
-            <p class="message success-message" th:text="${message}" th:if="${message}"></p>
-            <p class="message error-message" th:text="${EmailMessege}" th:if="${EmailMessege}"></p>
-        </div>
-    </section>
-    </div>
-  
-    <div class="find">
-        <h2>Find Ticket by ID</h2>
-        <form th:action="@{/api/TicketDetails/find}" method="get">
-            <label for="ticketId">Enter Ticket ID:</label>
-            <input type="number" name="id" id="ticketId" required placeholder="Enter your ticket ID" class="id">
-            <button type="submit">Find Ticket</button>
-        </form>
-
-        <div>
-            <p class="message success-message" th:text="${message}" th:if="${message}"></p>
-            <p class="message error-message" th:text="${errorMessage}" th:if="${errorMessage}"></p> <!-- Display error message -->
-        </div>
-        
-        <div th:if="${ticketDetails}">
-            <h3>Ticket Details</h3>
-            <p th:text="'Destination: ' + ${ticketDetails.destination}"></p>
-            <p th:text="'Distance: ' + ${ticketDetails.distance}"></p>
-            <p th:text="'Ticket Type: ' + ${ticketDetails.ticketType}"></p>
-            <p th:text="'Price: ' + ${ticketDetails.price}"></p>
-            <p th:text="'Email: ' + ${ticketDetails.email}"></p>
+                <div>
+                    <p class="message success-message" th:text="${message}" th:if="${message}"></p>
+                    <p class="message error-message" th:text="${EmailMessege}" th:if="${EmailMessege}"></p>
+                </div>
+            </section>
         </div>
 
+        <div class="find">
+            <h2>Find Ticket by ID</h2>
+            <form th:action="@{/api/TicketDetails/find}" method="get">
+                <label for="ticketId">Enter Ticket ID:</label>
+                <input type="number" name="id" id="ticketId" required placeholder="Enter your ticket ID" class="id">
+                <button type="submit">Find Ticket</button>
+            </form>
+
+            <div>
+                <p class="message success-message" th:text="${message}" th:if="${message}"></p>
+                <p class="message error-message" th:text="${errorMessage}" th:if="${errorMessage}"></p>
+            </div>
+            
+            <div th:if="${ticketDetails}">
+                <h3>Ticket Details</h3>
+                <p th:text="'Destination: ' + ${ticketDetails.destination}"></p>
+                <p th:text="'Distance: ' + ${ticketDetails.distance}"></p>
+                <p th:text="'Ticket Type: ' + ${ticketDetails.ticketType}"></p>
+                <p th:text="'Price: ' + ${ticketDetails.price}"></p>
+                <p th:text="'Email: ' + ${ticketDetails.email}"></p>
+            </div>
+        </div>
     </div>
 </div>
+
+<footer class="footer">
+    <p>© 2024 Smart Ticket System. All Rights Reserved.</p>
+</footer>
+
 </body>
 </html>

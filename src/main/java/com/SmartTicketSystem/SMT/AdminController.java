@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+
 @Controller
 @RequestMapping("/api/Admin")
 public class AdminController {
@@ -24,69 +26,77 @@ public class AdminController {
   public String save(@RequestParam String username,
       @RequestParam String number,
       @RequestParam String password, Model model) {
+        
     Admin exists = adminService.existsByid(username);
     if (exists == null) {
-      Admin admin = new Admin();
-      admin.setUsername(username);
-      admin.setNumber(number);
-      admin.setPassword(password);
-      adminService.Save(admin);
-      model.addAttribute("message", "Successfully created Account with " + admin.getUsername());
-      return "login";
+      adminService.Save(username,password,number);
+      model.addAttribute("message", "Successfully created Account ");
+      return "userslogin";
     } else {
       model.addAttribute("error", "email already exists !");
-      return "login";
+      return "userslogin";
     }
   }
 
   @GetMapping("/login")
   public String loginPage(Model model) {
-    return "login";
+    return "userslogin";
   }
 
-  @PostMapping("/login")
+  @PostMapping("/userslogin")
   public String LoginPage(@RequestParam String username,
-      @RequestParam String password, Model model) {
-
+                          @RequestParam String password,
+                          Model model) {
+    boolean results =adminService.login(username, password);
     Admin userCheck = adminService.existsByid(username);
-    if (userCheck!=null) {
 
-      if (userCheck.getPassword().equals(password)) {
+    if (userCheck!=null) {
+      if (results==true) {
         model.addAttribute("LoginMessage", "Login Successfully");
-        List<TicketDetails> ticketDetails = smtService.getAllDetails();
+        List<TicketDetails> ticketDetails = smtService.getAllTicketsDetailsbyid(username);
         model.addAttribute("ticketDetails", ticketDetails);
-        return "tickets";
+       return "tickets";
+
       } else {
         model.addAttribute("wrongpassword", "Entered wrong password");
-        return "login";
+        return "userslogin";
       }
     } else {
       model.addAttribute("errorusername", " account does not exists");
-      return "login";
+      return "userslogin";
     }
   }
- 
-  @PostMapping("/userlogin")
-  public String UserLogin(@RequestParam String username,
-                          @RequestParam String password, Model model ){
-                            Admin userCheck = adminService.existsByid(username);
-                            if (userCheck!=null) {
-                        
-                              if (userCheck.getPassword().equals(password)) {
-                                model.addAttribute("LoginMessage", "Login Successfully");
-                                List<TicketDetails> ticketDetails = smtService.getAllTicketsDetails(username);
-                                model.addAttribute("ticketDetails", ticketDetails);
-                                return "tickets";
-                              } else {
-                                model.addAttribute("wrongpassword", "Entered wrong password");
-                                return "userslogin";
-                              }
-                            } else {
-                              model.addAttribute("errorusername", " account does not exists");
-                              return "userslogin";
-                            }
-  
+
+  @PostMapping("/adminlogin")
+  public String adminLogin(@RequestParam String username,
+                          @RequestParam String password,Model model) {
+     
+       String adminusername="usrikanthuyyala@gmail.com";
+       boolean results =adminService.login(username,password);
+       if (adminusername.equals(username)) {
+        if (results==true) {
+          model.addAttribute("LoginMessage", "login Successfully");
+          List<TicketDetails> ticketDetails=smtService.getAllDetails();
+         
+          if (ticketDetails.isEmpty()) {
+            model.addAttribute("noticketsfound", "no bookings with your id ");
+            return"tickets";
+          } else{
+          model.addAttribute("ticketDetails", ticketDetails);
+          return "tickets";
+          }
+        }else{
+         model.addAttribute("wrongpassword", "Entered wrong password");
+         return"login";
+        }
+       } else {
+        model.addAttribute("errorusername", "username does not exist");
+        return "login";
+       }
+      
   }
+  
+ 
   
   @PostMapping("/delete")
 public String deleteById(@RequestParam long id, RedirectAttributes redirectAttributes) {
@@ -96,6 +106,7 @@ public String deleteById(@RequestParam long id, RedirectAttributes redirectAttri
    redirectAttributes.addAttribute("ticketDetails", ticketDetails);
       return "redirect:/api/Admin/tickets";
 }
+
 @GetMapping("/tickets")
 public String showTickets(Model model) {
     List<TicketDetails> ticketDetails = smtService.getAllDetails();

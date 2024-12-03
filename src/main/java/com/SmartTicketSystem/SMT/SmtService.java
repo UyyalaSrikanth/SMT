@@ -56,7 +56,7 @@ public class SmtService {
     public List<TicketDetails> getAllDetails() {
         return smtRepository.findAll();
     }
-    public List<TicketDetails> getAllTicketsDetails(String email) {
+    public List<TicketDetails> getAllTicketsDetailsbyid(String email) {
         return smtRepository.findByEmail(email);
     }
 
