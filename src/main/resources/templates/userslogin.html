@@ -133,6 +133,35 @@
          border-bottom: 1px solid #ddd;
         width: 100%; /* Full width */
     }
+    .form-container {
+            flex: 1;
+            margin-top: 80px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 250px;
+            height:350px;
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
+             backdrop-filter: blur(15px); /* Apply blur effect */
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+           border-radius: 15px;
+           display: none;
+             opacity: 0.9; /* Adjust transparency */
+            color: #160e0e;
+            
+        }
+        .form-container.active {
+            display: block; /* Show when active */
+        }
+        .navs{
+            margin-top: 100px;
+            font-size: larger;
+            text-align: center; 
+            padding: 5px 0; 
+            color: #f4f4f9;
+            backdrop-filter: blur(10px);
+        }
 }
     </style>
     <script>
